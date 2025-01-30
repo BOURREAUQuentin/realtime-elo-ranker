@@ -1,10 +1,13 @@
-import { AppService } from './app.service';
-export declare class AppController {
-    private readonly appService;
-    constructor(appService: AppService);
-    getHello(): string;
-    getData(): String[];
-    addData(data: string): {
-        message: string;
-    };
+import { Response } from 'express';
+import { RankingService } from './app.service';
+interface Player {
+    id: string;
+    rank: number;
 }
+export declare class RankingController {
+    private readonly rankingService;
+    constructor(rankingService: RankingService);
+    createPlayer(player: Player, res: Response): Response<any, Record<string, any>>;
+    getRanking(res: Response): Response<any, Record<string, any>>;
+}
+export {};

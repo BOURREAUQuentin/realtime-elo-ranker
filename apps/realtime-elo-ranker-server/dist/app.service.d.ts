@@ -1,7 +1,10 @@
-export declare class AppService {
-    private data;
-    constructor();
-    addData(data: String): void;
-    getData(): String[];
-    getHello(): string;
+interface Player {
+    id: string;
+    rank: number;
 }
+export declare class RankingService {
+    private players;
+    createPlayer(player: Player): Player | null;
+    getRanking(): Player[];
+}
+export {};

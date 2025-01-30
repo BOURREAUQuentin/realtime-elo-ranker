@@ -12,46 +12,52 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.RankingController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-let AppController = class AppController {
-    constructor(appService) {
-        this.appService = appService;
+let RankingController = class RankingController {
+    constructor(rankingService) {
+        this.rankingService = rankingService;
     }
-    getHello() {
-        return this.appService.getHello();
+    createPlayer(player, res) {
+        if (!player.id) {
+            return res.status(common_1.HttpStatus.BAD_REQUEST).json({
+                code: 400,
+                message: "L'identifiant du joueur n'est pas valide",
+            });
+        }
+        const newPlayer = this.rankingService.createPlayer(player);
+        if (!newPlayer) {
+            return res.status(common_1.HttpStatus.CONFLICT).json({
+                code: 409,
+                message: 'Le joueur existe déjà',
+            });
+        }
+        return res.status(common_1.HttpStatus.OK).json(newPlayer);
     }
-    getData() {
-        return this.appService.getData();
-    }
-    addData(data) {
-        this.appService.addData(data);
-        return { message: data };
+    getRanking(res) {
+        const ranking = this.rankingService.getRanking();
+        return res.status(200).json(ranking);
     }
 };
-exports.AppController = AppController;
+exports.RankingController = RankingController;
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
-__decorate([
-    (0, common_1.Get)('data'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "getData", null);
-__decorate([
-    (0, common_1.Post)('data'),
+    (0, common_1.Post)('/api/player'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "addData", null);
-exports.AppController = AppController = __decorate([
+], RankingController.prototype, "createPlayer", null);
+__decorate([
+    (0, common_1.Get)('/api/ranking'),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], RankingController.prototype, "getRanking", null);
+exports.RankingController = RankingController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
+    __metadata("design:paramtypes", [app_service_1.RankingService])
+], RankingController);
 //# sourceMappingURL=app.controller.js.map
