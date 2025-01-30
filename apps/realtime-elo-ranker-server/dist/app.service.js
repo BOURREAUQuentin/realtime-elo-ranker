@@ -11,9 +11,10 @@ const common_1 = require("@nestjs/common");
 let RankingService = class RankingService {
     constructor() {
         this.players = [];
+        this.K = 32;
     }
     createPlayer(player) {
-        if (this.players.some(p => p.id === player.id)) {
+        if (this.players.some((p) => p.id === player.id)) {
             return null;
         }
         const newPlayer = { id: player.id, rank: 1000 };
@@ -22,6 +23,41 @@ let RankingService = class RankingService {
     }
     getRanking() {
         return [...this.players].sort((a, b) => b.rank - a.rank);
+    }
+    getPlayer(id) {
+        return this.players.find((p) => p.id === id);
+    }
+    calculateExpectedScore(playerRank, opponentRank) {
+        return 1 / (1 + Math.pow(10, (opponentRank - playerRank) / 400));
+    }
+    calculateNewRating(oldRating, expectedScore, actualScore) {
+        return Math.round(oldRating + this.K * (actualScore - expectedScore));
+    }
+    processMatch(match) {
+        const winner = this.getPlayer(match.winner);
+        const loser = this.getPlayer(match.loser);
+        if (!winner || !loser) {
+            throw new Error("Un des joueurs n'existe pas");
+        }
+        const expectedScoreWinner = this.calculateExpectedScore(winner.rank, loser.rank);
+        const expectedScoreLoser = 1 - expectedScoreWinner;
+        const actualScoreWinner = match.draw ? 0.5 : 1;
+        const actualScoreLoser = match.draw ? 0.5 : 0;
+        const newWinnerRating = this.calculateNewRating(winner.rank, expectedScoreWinner, actualScoreWinner);
+        const newLoserRating = this.calculateNewRating(loser.rank, expectedScoreLoser, actualScoreLoser);
+        winner.rank = newWinnerRating;
+        loser.rank = newLoserRating;
+        this.players = this.players.map(p => {
+            if (p.id === winner.id)
+                return winner;
+            if (p.id === loser.id)
+                return loser;
+            return p;
+        });
+        return {
+            winner: { ...winner },
+            loser: { ...loser },
+        };
     }
 };
 exports.RankingService = RankingService;

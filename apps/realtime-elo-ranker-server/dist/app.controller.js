@@ -19,6 +19,18 @@ let RankingController = class RankingController {
     constructor(rankingService) {
         this.rankingService = rankingService;
     }
+    createMatch(match, res) {
+        const winner = this.rankingService.getPlayer(match.winner);
+        const loser = this.rankingService.getPlayer(match.loser);
+        if (!winner || !loser) {
+            return res.status(common_1.HttpStatus.UNPROCESSABLE_ENTITY).json({
+                code: 422,
+                message: "Un des joueurs n'existe pas",
+            });
+        }
+        const result = this.rankingService.processMatch(match);
+        return res.status(common_1.HttpStatus.OK).json(result);
+    }
     createPlayer(player, res) {
         if (!player.id) {
             return res.status(common_1.HttpStatus.BAD_REQUEST).json({
@@ -37,10 +49,24 @@ let RankingController = class RankingController {
     }
     getRanking(res) {
         const ranking = this.rankingService.getRanking();
+        if (ranking.length == 0) {
+            return res.status(common_1.HttpStatus.CONFLICT).json({
+                code: 404,
+                message: "Le classement n'est pas disponible car aucun joueur n'existe",
+            });
+        }
         return res.status(200).json(ranking);
     }
 };
 exports.RankingController = RankingController;
+__decorate([
+    (0, common_1.Post)('/api/match'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], RankingController.prototype, "createMatch", null);
 __decorate([
     (0, common_1.Post)('/api/player'),
     __param(0, (0, common_1.Body)()),
