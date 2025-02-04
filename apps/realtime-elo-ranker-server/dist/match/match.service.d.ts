@@ -9,8 +9,8 @@ export declare class MatchService {
     private readonly playerService;
     private readonly rankingService;
     constructor(playerService: PlayerService, rankingService: RankingService);
-    processMatch(match: MatchResult): {
+    processMatch(match: MatchResult): Promise<{
         winner: Player;
         loser: Player;
-    };
+    }>;
 }
