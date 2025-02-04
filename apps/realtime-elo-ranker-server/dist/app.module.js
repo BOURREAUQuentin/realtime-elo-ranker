@@ -11,12 +11,17 @@ const common_1 = require("@nestjs/common");
 const player_module_1 = require("./player/player.module");
 const match_module_1 = require("./match/match.module");
 const ranking_module_1 = require("./ranking/ranking.module");
+const event_emitter_service_1 = require("./event-emitter/event-emitter.service");
+const event_emitter_controller_1 = require("./event-emitter/event-emitter.controller");
+const event_emitter_module_1 = require("./event-emitter/event-emitter.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [player_module_1.PlayerModule, match_module_1.MatchModule, ranking_module_1.RankingModule],
+        imports: [player_module_1.PlayerModule, match_module_1.MatchModule, ranking_module_1.RankingModule, event_emitter_module_1.EventEmitterModule],
+        providers: [event_emitter_service_1.EventEmitterService],
+        controllers: [event_emitter_controller_1.EventEmitterController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

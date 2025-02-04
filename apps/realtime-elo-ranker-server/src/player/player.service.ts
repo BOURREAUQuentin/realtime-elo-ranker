@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitterService } from '../event-emitter/event-emitter.service';
 
 export interface Player {
   id: string;
@@ -8,6 +9,8 @@ export interface Player {
 @Injectable()
 export class PlayerService {
   private players: Player[] = [];
+
+  constructor(private readonly eventEmitterService: EventEmitterService) {}
 
   createPlayer(id: string): Player | null {
     if (this.players.some((p) => p.id === id)) return null;
@@ -20,6 +23,9 @@ export class PlayerService {
 
     const newPlayer: Player = { id, rank: Math.round(averageRank) };
     this.players.push(newPlayer);
+
+    this.eventEmitterService.emit('ranking.update', newPlayer);
+
     return newPlayer;
   }
 

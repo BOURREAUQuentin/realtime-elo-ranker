@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PlayerService, Player } from '../player/player.service';
 import { MatchResult } from '../match/match.service';
+import { EventEmitterService } from '../event-emitter/event-emitter.service';
 
 @Injectable()
 export class RankingService {
   private readonly K = 32;
 
-  constructor(private readonly playerService: PlayerService) {}
+  constructor(private readonly playerService: PlayerService, private readonly eventEmitterService: EventEmitterService) {}
 
   private calculateExpectedScore(
     playerRank: number,
@@ -44,6 +45,9 @@ export class RankingService {
       expectedLoser,
       actualLoser,
     );
+
+    this.eventEmitterService.emit('ranking.update', winner);
+    this.eventEmitterService.emit('ranking.update', loser);
 
     return { winner, loser };
   }
