@@ -24,10 +24,10 @@ let MatchController = class MatchController {
             .then((result) => {
             return res.status(common_1.HttpStatus.OK).json(result);
         })
-            .catch(() => {
+            .catch((error) => {
             return res.status(common_1.HttpStatus.UNPROCESSABLE_ENTITY).json({
                 code: 422,
-                message: "Un des joueurs n'existe pas",
+                message: error.message || "Erreur lors du traitement du match",
             });
         });
     }

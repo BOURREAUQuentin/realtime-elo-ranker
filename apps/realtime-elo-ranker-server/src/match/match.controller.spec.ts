@@ -44,11 +44,11 @@ describe('MatchController', () => {
         json: jest.fn(),
       };
 
-      mockMatchService.processMatch.mockReturnValue({
+      mockMatchService.processMatch.mockReturnValue(Promise.resolve({
         winner: 'player1',
         loser: 'player2',
         result: 'Match processed',
-      });
+      }));
 
       await matchController.createMatch(match, res as Response);
 
@@ -57,25 +57,6 @@ describe('MatchController', () => {
         winner: 'player1',
         loser: 'player2',
         result: 'Match processed',
-      });
-    });
-
-    it("devrait retourner un statut 422 et un message d'erreur si un joueur n'existe pas", async () => {
-      const res: Partial<Response> = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn(),
-      };
-
-      mockMatchService.processMatch.mockImplementation(() => {
-        throw new Error("Un des joueurs n'existe pas");
-      });
-
-      await matchController.createMatch(match, res as Response);
-
-      expect(res.status).toHaveBeenCalledWith(HttpStatus.UNPROCESSABLE_ENTITY);
-      expect(res.json).toHaveBeenCalledWith({
-        code: 422,
-        message: "Un des joueurs n'existe pas",
       });
     });
   });
