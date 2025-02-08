@@ -3,5 +3,5 @@ import { MatchService, MatchResult } from './match.service';
 export declare class MatchController {
     private readonly matchService;
     constructor(matchService: MatchService);
-    createMatch(match: MatchResult, res: Response): Response<any, Record<string, any>>;
+    createMatch(match: MatchResult, res: Response): void;
 }
