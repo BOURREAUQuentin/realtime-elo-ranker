@@ -11,11 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatchService = void 0;
 const common_1 = require("@nestjs/common");
-const player_service_1 = require("../player/player.service");
 const ranking_service_1 = require("../ranking/ranking.service");
 let MatchService = class MatchService {
-    constructor(playerService, rankingService) {
-        this.playerService = playerService;
+    constructor(rankingService) {
         this.rankingService = rankingService;
     }
     processMatch(match) {
@@ -25,7 +23,6 @@ let MatchService = class MatchService {
 exports.MatchService = MatchService;
 exports.MatchService = MatchService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [player_service_1.PlayerService,
-        ranking_service_1.RankingService])
+    __metadata("design:paramtypes", [ranking_service_1.RankingService])
 ], MatchService);
 //# sourceMappingURL=match.service.js.map

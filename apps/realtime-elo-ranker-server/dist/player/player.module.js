@@ -11,12 +11,14 @@ const common_1 = require("@nestjs/common");
 const player_service_1 = require("./player.service");
 const player_controller_1 = require("./player.controller");
 const event_emitter_module_1 = require("../event-emitter/event-emitter.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const player_entity_1 = require("./player.entity");
 let PlayerModule = class PlayerModule {
 };
 exports.PlayerModule = PlayerModule;
 exports.PlayerModule = PlayerModule = __decorate([
     (0, common_1.Module)({
-        imports: [event_emitter_module_1.EventEmitterModule],
+        imports: [event_emitter_module_1.EventEmitterModule, typeorm_1.TypeOrmModule.forFeature([player_entity_1.PlayerEntity])],
         providers: [player_service_1.PlayerService],
         controllers: [player_controller_1.PlayerController],
         exports: [player_service_1.PlayerService],

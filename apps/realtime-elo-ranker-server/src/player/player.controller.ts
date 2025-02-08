@@ -14,13 +14,16 @@ export class PlayerController {
         message: "L'identifiant du joueur n'est pas valide",
       });
     }
-    const player = this.playerService.createPlayer(id);
-    if (!player) {
-      return res.status(HttpStatus.CONFLICT).json({
-        code: 409,
-        message: 'Le joueur existe déjà',
+
+    return this.playerService.createPlayer(id)
+      .then(player => {
+        if (!player) {
+          return res.status(HttpStatus.CONFLICT).json({
+            code: 409,
+            message: 'Le joueur existe déjà',
+          });
+        }
+        return res.status(HttpStatus.CREATED).json(player);
       });
-    }
-    return res.status(HttpStatus.CREATED).json(player);
   }
 }

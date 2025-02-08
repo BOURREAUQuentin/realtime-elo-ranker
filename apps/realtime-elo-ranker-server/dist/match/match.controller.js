@@ -20,16 +20,16 @@ let MatchController = class MatchController {
         this.matchService = matchService;
     }
     createMatch(match, res) {
-        try {
-            const result = this.matchService.processMatch(match);
+        this.matchService.processMatch(match)
+            .then((result) => {
             return res.status(common_1.HttpStatus.OK).json(result);
-        }
-        catch {
+        })
+            .catch(() => {
             return res.status(common_1.HttpStatus.UNPROCESSABLE_ENTITY).json({
                 code: 422,
                 message: "Un des joueurs n'existe pas",
             });
-        }
+        });
     }
 };
 exports.MatchController = MatchController;

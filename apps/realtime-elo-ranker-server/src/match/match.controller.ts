@@ -8,14 +8,15 @@ export class MatchController {
 
   @Post()
   createMatch(@Body() match: MatchResult, @Res() res: Response) {
-    try {
-      const result = this.matchService.processMatch(match);
-      return res.status(HttpStatus.OK).json(result);
-    } catch {
-      return res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
-        code: 422,
-        message: "Un des joueurs n'existe pas",
+    this.matchService.processMatch(match)
+      .then((result) => {
+        return res.status(HttpStatus.OK).json(result);
+      })
+      .catch((error) => {
+        return res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
+          code: 422,
+          message: error.message || "Erreur lors du traitement du match",
+        });
       });
-    }
   }
 }
