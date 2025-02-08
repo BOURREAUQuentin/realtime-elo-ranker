@@ -20,5 +20,11 @@
     "next": "15.1.4",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+  "packageManager": "pnpm@8.15.9+sha512.499434c9d8fdd1a2794ebf4552b3b25c0a633abcee5bb15e7b5de90f32f47b513aca98cd5cfd001c31f0db454bc3804edccd578501e4ca293a6816166bbd9f81",
+  "dependencies": {
+    "@nestjs/event-emitter": "^3.0.0",
+    "@nestjs/typeorm": "^11.0.0",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
+  }
 }
