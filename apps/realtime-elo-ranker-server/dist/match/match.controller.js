@@ -24,7 +24,7 @@ let MatchController = class MatchController {
             .then((result) => res.status(common_1.HttpStatus.OK).json(result))
             .catch(() => res.status(common_1.HttpStatus.UNPROCESSABLE_ENTITY).json({
             code: 422,
-            message: "Un des joueurs n'existe pas",
+            message: "Soit le gagnant, soit le perdant indiqué n'existe pas",
         }));
     }
 };

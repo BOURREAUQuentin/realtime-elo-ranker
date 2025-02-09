@@ -12,7 +12,7 @@ export class MatchController {
       .then((result) => res.status(HttpStatus.OK).json(result))
       .catch(() => res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({
         code: 422,
-        message: "Un des joueurs n'existe pas",
+        message: "Soit le gagnant, soit le perdant indiqué n'existe pas",
       }));
   }
 }
