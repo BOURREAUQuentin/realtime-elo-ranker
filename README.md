@@ -537,7 +537,7 @@ Le coverage (couverture) des tests permet d'évaluer quelle proportion du code s
 
 ## Vidéo de l'application
 
-Voici une vidéo de test de l'application à partir d'aucune base de données existante :
+Voici une vidéo de test de l'application à partir d'aucune base de données existante ([lien vidéo](captures/video_application.mp4)) :
 
 <video controls src="captures/video_application.mp4" title="Vidéo de l'application"></video>
 
