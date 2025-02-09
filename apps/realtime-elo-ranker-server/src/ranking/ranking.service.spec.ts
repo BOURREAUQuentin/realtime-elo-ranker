@@ -45,7 +45,7 @@ describe('RankingService', () => {
     eventEmitterService = module.get<EventEmitterService>(EventEmitterService);
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(rankingService).toBeDefined();
   });
 
@@ -70,7 +70,7 @@ describe('RankingService', () => {
       });
     });
 
-    it('devrait mettre à jour le classement des joueurs', async () => {
+    it('should update the player rankings', async () => {
       const result = await rankingService.updateRanking(match);
 
       expect(playerRepository.findOne).toHaveBeenCalledTimes(2);
@@ -80,7 +80,7 @@ describe('RankingService', () => {
       expect(result.loser.rank).not.toBe(1000);
     });
 
-    it("devrait lever une erreur si l'un des joueurs n'existe pas", async () => {
+    it("should raise an error if one of the players doesn't exist", async () => {
       jest.spyOn(playerRepository, 'findOne').mockResolvedValueOnce(null);
 
       await expect(rankingService.updateRanking(match)).rejects.toThrow("Un des joueurs n'existe pas");

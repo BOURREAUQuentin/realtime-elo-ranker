@@ -21,15 +21,11 @@ let MatchController = class MatchController {
     }
     createMatch(match, res) {
         this.matchService.processMatch(match)
-            .then((result) => {
-            return res.status(common_1.HttpStatus.OK).json(result);
-        })
-            .catch((error) => {
-            return res.status(common_1.HttpStatus.UNPROCESSABLE_ENTITY).json({
-                code: 422,
-                message: error.message || "Erreur lors du traitement du match",
-            });
-        });
+            .then((result) => res.status(common_1.HttpStatus.OK).json(result))
+            .catch(() => res.status(common_1.HttpStatus.UNPROCESSABLE_ENTITY).json({
+            code: 422,
+            message: "Un des joueurs n'existe pas",
+        }));
     }
 };
 exports.MatchController = MatchController;

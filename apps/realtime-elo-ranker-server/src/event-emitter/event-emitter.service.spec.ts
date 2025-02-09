@@ -15,12 +15,12 @@ describe('EventEmitterService', () => {
     eventEmitter = eventEmitterService.getEmitter();
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(eventEmitterService).toBeDefined();
     expect(eventEmitter).toBeDefined();
   });
 
-  it('devrait émettre un événement', () => {
+  it('should issue an event', () => {
     const emitSpy = jest.spyOn(eventEmitter, 'emit');
   
     const eventName = 'ranking.update';
@@ -36,7 +36,7 @@ describe('EventEmitterService', () => {
     expect(result).toBe(true);
   });  
 
-  it('devrait récupérer l\'instance de EventEmitter2', () => {
+  it('should retrieve the instance of EventEmitter2', () => {
     expect(eventEmitterService.getEmitter()).toBeInstanceOf(EventEmitter2);
   });
 });

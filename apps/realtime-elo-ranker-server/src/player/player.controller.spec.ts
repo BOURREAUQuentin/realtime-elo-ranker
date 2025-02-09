@@ -29,12 +29,12 @@ describe('PlayerController', () => {
     eventEmitterService = module.get<EventEmitterService>(EventEmitterService);
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(playerController).toBeDefined();
   });
 
   describe('createPlayer', () => {
-    it('devrait retourner 201 si le joueur est créé avec succès', async () => {
+    it('should return 201 if the player is successfully created', async () => {
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockReturnThis(),

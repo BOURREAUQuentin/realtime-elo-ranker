@@ -29,16 +29,16 @@ describe('PlayerModule', () => {
     dataSource = module.get<DataSource>(DataSource);
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(module).toBeDefined();
   });
 
-  it('devrait contenir PlayerService', () => {
+  it('should contain PlayerService', () => {
     const playerService = module.get<PlayerService>(PlayerService);
     expect(playerService).toBeDefined();
   });
 
-  it('devrait contenir PlayerController', () => {
+  it('should contain PlayerController', () => {
     const playerController = module.get<PlayerController>(PlayerController);
     expect(playerController).toBeDefined();
   });

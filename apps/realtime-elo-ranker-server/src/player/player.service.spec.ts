@@ -35,16 +35,15 @@ describe('PlayerService', () => {
     playerRepository = module.get<Repository<PlayerEntity>>(getRepositoryToken(PlayerEntity));
     eventEmitterService = module.get<EventEmitterService>(EventEmitterService);
 
-    // Chargement initial des joueurs depuis la base
     await playerService['loadPlayersFromDatabase']();
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(playerService).toBeDefined();
   });
 
   describe('createPlayer', () => {
-    it('devrait retourner null si le joueur existe déjà', async () => {
+    it('should return null if the player already exists', async () => {
       const existingPlayer = { id: 'existingPlayer', rank: 1300 };
 
       const result = await playerService.createPlayer(existingPlayer.id);
@@ -56,18 +55,15 @@ describe('PlayerService', () => {
   });
 
   describe('loadPlayersFromDatabase', () => {
-    it('devrait charger les joueurs depuis la base de données', async () => {
-      // Mock du repository pour renvoyer des entités PlayerEntity
+    it('should load players from the database', async () => {
       const mockPlayersFromDb: PlayerEntity[] = [
         { id: 'player1', rank: 1200 } as PlayerEntity,
         { id: 'player2', rank: 1100 } as PlayerEntity,
       ];
       jest.spyOn(playerRepository, 'find').mockResolvedValue(mockPlayersFromDb);
   
-      // Appel manuel de la méthode
       await playerService['loadPlayersFromDatabase']();
   
-      // Vérification que les joueurs ont bien été chargés en mémoire
       expect(playerService.getAllPlayers()).toEqual([
         { id: 'player1', rank: 1200 },
         { id: 'player2', rank: 1100 },
@@ -75,17 +71,17 @@ describe('PlayerService', () => {
     });
   });
 
-  describe('PlayerService - Tests supplémentaires', () => {
+  describe('PlayerService - Additional tests', () => {
     describe('loadPlayersFromDatabase', () => {
-      it('devrait ne pas planter si la base est vide', async () => {
-        jest.spyOn(playerRepository, 'find').mockResolvedValue([]); // Aucun joueur en base
+      it('should not crash if the base is empty', async () => {
+        jest.spyOn(playerRepository, 'find').mockResolvedValue([]);
   
         await playerService['loadPlayersFromDatabase']();
   
         expect(playerService.getAllPlayers()).toEqual([]);
       });
   
-      it('devrait charger correctement les joueurs', async () => {
+      it('should load players correctly', async () => {
         const mockPlayersFromDb: PlayerEntity[] = [
           { id: 'player1', rank: 1200 } as PlayerEntity,
           { id: 'player2', rank: 1100 } as PlayerEntity,
@@ -102,7 +98,7 @@ describe('PlayerService', () => {
     });
   
     describe('createPlayer', () => {
-      it('devrait créer un joueur avec un rang moyen', async () => {
+      it('should create a player with an average rank', async () => {
         playerService['players'] = [
           { id: 'existing1', rank: 1500 },
           { id: 'existing2', rank: 1000 },
@@ -117,8 +113,8 @@ describe('PlayerService', () => {
         expect(eventEmitterService.emit).toHaveBeenCalledWith('ranking.update', { id: 'newPlayer', rank: 1250 });
       });
   
-      it('devrait assigner un rang de 1000 si aucun joueur existant', async () => {
-        playerService['players'] = []; // Aucun joueur existant
+      it('should assign a rank of 1000 if no existing player', async () => {
+        playerService['players'] = [];
   
         const saveMock = jest.spyOn(playerRepository, 'save').mockResolvedValue({ id: 'newPlayer', rank: 1000 } as PlayerEntity);
   
@@ -131,7 +127,7 @@ describe('PlayerService', () => {
     });
   
     describe('getPlayer', () => {
-      it('devrait retourner un joueur existant', () => {
+      it('should return an existing player', () => {
         playerService['players'] = [{ id: 'player1', rank: 1200 }];
   
         const result = playerService.getPlayer('player1');
@@ -139,7 +135,7 @@ describe('PlayerService', () => {
         expect(result).toEqual({ id: 'player1', rank: 1200 });
       });
   
-      it('devrait retourner undefined si le joueur n\'existe pas', () => {
+      it('should return undefined if the player does not exist', () => {
         playerService['players'] = [{ id: 'player1', rank: 1200 }];
   
         const result = playerService.getPlayer('unknown');
@@ -149,7 +145,7 @@ describe('PlayerService', () => {
     });
   
     describe('getAllPlayers', () => {
-      it('devrait retourner une liste triée par rang', () => {
+      it('should return a list sorted by rank', () => {
         playerService['players'] = [
           { id: 'p1', rank: 1000 },
           { id: 'p2', rank: 1200 },

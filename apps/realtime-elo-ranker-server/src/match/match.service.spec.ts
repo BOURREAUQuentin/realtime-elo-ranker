@@ -26,7 +26,7 @@ describe('MatchService', () => {
     rankingService = module.get<RankingService>(RankingService);
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(matchService).toBeDefined();
   });
 
@@ -36,7 +36,7 @@ describe('MatchService', () => {
     const winner: Player = { id: 'player1', rank: 1200 };
     const loser: Player = { id: 'player2', rank: 1000 };
 
-    it('devrait appeler updateRanking avec le résultat du match', async () => {
+    it('should call updateRanking with the match result', async () => {
       mockRankingService.updateRanking.mockResolvedValue({ winner, loser });
 
       const result = await matchService.processMatch(match);
@@ -45,7 +45,7 @@ describe('MatchService', () => {
       expect(result).toEqual({ winner, loser });
     });
 
-    it('devrait lever une erreur si l\'updateRanking échoue', async () => {
+    it('should raise an error if updateRanking fails', async () => {
       mockRankingService.updateRanking.mockRejectedValue(new Error('Erreur lors de la mise à jour du classement'));
 
       await expect(matchService.processMatch(match)).rejects.toThrow('Erreur lors de la mise à jour du classement');

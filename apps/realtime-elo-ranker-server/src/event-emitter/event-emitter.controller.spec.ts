@@ -12,7 +12,7 @@ describe('EventEmitterController', () => {
     controller = module.get<EventEmitterController>(EventEmitterController);
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 });

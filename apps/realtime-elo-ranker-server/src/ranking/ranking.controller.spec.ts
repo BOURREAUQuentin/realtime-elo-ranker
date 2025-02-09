@@ -37,12 +37,12 @@ describe('RankingController', () => {
     eventEmitter = eventEmitterService.getEmitter();
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
   describe('getRanking', () => {
-    it('devrait renvoyer le classement des joueurs', async () => {
+    it('should return the player rankings', async () => {
       const res = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockReturnThis(),
@@ -56,7 +56,7 @@ describe('RankingController', () => {
   });
 
   describe('getRankingEvents', () => {
-    it('devrait renvoyer un événement SSE avec les mises à jour de classement', async () => {
+    it('should return an SSE event with classification updates', async () => {
       const mockEvent = { id: 'player1', rank: 1300 };
       const eventSpy = jest.spyOn(eventEmitter, 'emit');
 

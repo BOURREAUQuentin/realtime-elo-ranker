@@ -27,7 +27,7 @@ describe('MatchController', () => {
     matchService = module.get<MatchService>(MatchService);
   });
 
-  it('devrait être défini', () => {
+  it('should be defined', () => {
     expect(matchController).toBeDefined();
   });
 
@@ -38,7 +38,7 @@ describe('MatchController', () => {
       draw: false,
     };
 
-    it('devrait retourner un statut 200 et les résultats du match lorsque le match est valide', async () => {
+    it('should return a 200 status and match results when the match is valid', async () => {
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),

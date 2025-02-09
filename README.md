@@ -535,6 +535,11 @@ Le coverage (couverture) des tests permet d'évaluer quelle proportion du code s
 
 ![alt text](captures/architecture.png)
 
+## Vidéo de l'application
+
+Voici une vidéo de test de l'application à partir d'aucune base de données existante :
+
+<video controls src="captures/video_application.mp4" title="Vidéo de l'application"></video>
 
 # 
 
